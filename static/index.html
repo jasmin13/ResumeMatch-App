@@ -1,0 +1,1893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ResumeMatch AI • Private Talent Intelligence & Matcher</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #090d16;
+      --bg-secondary: #111726;
+      --bg-card: rgba(18, 24, 38, 0.85);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --border-highlight: rgba(16, 185, 129, 0.4);
+      --accent: #10b981;
+      --accent-glow: rgba(16, 185, 129, 0.25);
+      --accent-cyan: #06b6d4;
+      --accent-blue: #3b82f6;
+      --accent-amber: #f59e0b;
+      --accent-purple: #8b5cf6;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --font-sans: 'Inter', -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg-primary);
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(16, 185, 129, 0.08) 0%, transparent 45%),
+        radial-gradient(circle at 90% 80%, rgba(6, 182, 212, 0.07) 0%, transparent 45%);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1.25rem;
+    }
+
+    .container { width: 100%; max-width: 1100px; }
+
+    /* Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .logo-group { display: flex; align-items: center; gap: 0.85rem; }
+
+    .logo-badge {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-cyan));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: #fff;
+      font-size: 1.3rem;
+      box-shadow: 0 4px 18px var(--accent-glow);
+    }
+
+    .brand-title { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.02em; }
+    .brand-subtitle { font-size: 0.82rem; color: var(--text-muted); font-weight: 500; }
+
+    .header-badges { display: flex; gap: 0.6rem; align-items: center; }
+
+    .badge {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      padding: 0.35rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .badge.green { border-color: rgba(16, 185, 129, 0.4); color: #34d399; }
+    .badge.blue { border-color: rgba(59, 130, 246, 0.4); color: #60a5fa; }
+    .status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    /* Tabs */
+    .tabs-nav {
+      display: flex;
+      gap: 0.5rem;
+      background: var(--bg-secondary);
+      padding: 0.35rem;
+      border-radius: 10px;
+      margin-bottom: 1.5rem;
+      border: 1px solid var(--border-color);
+      width: fit-content;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 0.55rem 1.1rem;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .tab-btn.active {
+      background: var(--accent);
+      color: #062a1d;
+      box-shadow: 0 2px 10px var(--accent-glow);
+    }
+
+    /* Cards */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 1.5rem;
+      backdrop-filter: blur(12px);
+      margin-bottom: 1.5rem;
+    }
+
+    .card-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Sample selector pills */
+    .sample-pills {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    .pill-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 0.35rem 0.8rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .pill-btn:hover {
+      background: rgba(16, 185, 129, 0.15);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    textarea {
+      width: 100%;
+      background: rgba(10, 14, 22, 0.7);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 1rem;
+      color: var(--text-main);
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      line-height: 1.5;
+      resize: vertical;
+      min-height: 180px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    textarea:focus { border-color: var(--accent); box-shadow: 0 0 10px var(--accent-glow); }
+
+    .action-row {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      margin-top: 1rem;
+      gap: 1rem;
+    }
+
+    .primary-btn {
+      background: linear-gradient(135deg, var(--accent), var(--accent-cyan));
+      border: none;
+      color: #04261a;
+      font-weight: 700;
+      padding: 0.75rem 1.75rem;
+      border-radius: 10px;
+      font-size: 0.92rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .primary-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px var(--accent-glow);
+    }
+    .primary-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* File Upload Dropzone */
+    .dropzone {
+      border: 2px dashed rgba(255, 255, 255, 0.16);
+      border-radius: 12px;
+      padding: 1.1rem 1rem;
+      text-align: center;
+      background: rgba(17, 23, 38, 0.6);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-bottom: 0.85rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+    }
+    .dropzone:hover, .dropzone.dragover {
+      border-color: var(--accent);
+      background: rgba(16, 185, 129, 0.08);
+      box-shadow: 0 0 16px var(--accent-glow);
+    }
+    .dropzone-icon {
+      font-size: 1.7rem;
+    }
+    .dropzone-title {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+    .dropzone-desc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+    .upload-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid var(--accent);
+      color: #34d399;
+      padding: 0.35rem 0.85rem;
+      border-radius: 9999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      margin-top: 0.4rem;
+    }
+
+    /* Output Section */
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .stat-box {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.1rem;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 0.35rem;
+    }
+
+    .stat-value {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-top: 0.5rem;
+    }
+
+    .skill-tag {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #6ee7b7;
+      padding: 0.3rem 0.7rem;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    .role-tag {
+      background: rgba(59, 130, 246, 0.15);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      color: #93c5fd;
+      padding: 0.35rem 0.8rem;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    .summary-text {
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: #e5e7eb;
+    }
+
+    .score-circle {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      font-weight: 800;
+      border: 4px solid var(--accent);
+      color: var(--accent);
+      box-shadow: 0 0 25px var(--accent-glow);
+    }
+
+    pre {
+      background: #070a10;
+      border: 1px solid var(--border-color);
+      padding: 1rem;
+      border-radius: 10px;
+      overflow-x: auto;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: #38bdf8;
+    }
+
+    .hidden { display: none !important; }
+    .spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      min-width: 16px;
+      min-height: 16px;
+      box-sizing: border-box;
+      border: 2.5px solid rgba(255, 255, 255, 0.3);
+      border-top: 2.5px solid #ffffff;
+      border-radius: 50%;
+      animation: spin 0.75s linear infinite;
+      vertical-align: middle;
+      margin-right: 0.55rem;
+      flex-shrink: 0;
+    }
+    #btnAnalyzeText, #btnMatchText, #btnBatchText {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Batch Screener Styles */
+    .file-chips-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+      max-height: 140px;
+      overflow-y: auto;
+    }
+    .file-chip {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-color);
+      padding: 0.35rem 0.65rem;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      color: var(--text-main);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .file-chip .remove-chip {
+      cursor: pointer;
+      color: var(--text-muted);
+      font-weight: 700;
+      margin-left: 0.2rem;
+    }
+    .file-chip .remove-chip:hover {
+      color: #ef4444;
+    }
+    /* Interactive Criteria Chips */
+    .criteria-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.25rem 0.55rem;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      transition: all 0.15s ease;
+    }
+    .criteria-chip.core {
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: #34d399;
+    }
+    .criteria-chip.pref {
+      background: rgba(139, 92, 246, 0.12);
+      border: 1px solid rgba(139, 92, 246, 0.35);
+      color: #a78bfa;
+    }
+    .criteria-chip .chip-del {
+      cursor: pointer;
+      font-size: 0.95rem;
+      line-height: 1;
+      opacity: 0.7;
+    }
+    .criteria-chip .chip-del:hover {
+      opacity: 1;
+      color: #ef4444;
+    }
+    .add-chip-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px dashed var(--border-color);
+      color: var(--text-muted);
+      padding: 0.22rem 0.55rem;
+      border-radius: 6px;
+      font-size: 0.74rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .add-chip-btn:hover {
+      border-color: var(--accent);
+      color: var(--text-main);
+    }
+    /* Modal Styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(4px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .modal-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      max-width: 900px;
+      width: 92%;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    }
+    .modal-header {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .modal-body {
+      padding: 1.5rem;
+      overflow-y: auto;
+    }
+    @media print {
+      body * {
+        visibility: hidden !important;
+      }
+      #executivePrintArea, #executivePrintArea * {
+        visibility: visible !important;
+      }
+      #executivePrintArea {
+        position: absolute !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 100% !important;
+        background: #ffffff !important;
+        color: #000000 !important;
+        padding: 24px !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+    }
+    .summary-metrics-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .summary-metric-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      padding: 1rem 1.2rem;
+      border-radius: 12px;
+      text-align: center;
+    }
+    .summary-metric-card .val {
+      font-size: 1.7rem;
+      font-weight: 800;
+      margin-top: 0.2rem;
+    }
+    .batch-table-wrapper {
+      overflow-x: auto;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      background: var(--bg-secondary);
+    }
+    .batch-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      text-align: left;
+    }
+    .batch-table th {
+      background: rgba(255, 255, 255, 0.03);
+      padding: 0.85rem 1rem;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border-color);
+    }
+    .batch-table td {
+      padding: 0.9rem 1rem;
+      border-bottom: 1px solid var(--border-color);
+      vertical-align: middle;
+    }
+    .batch-table tr:last-child td {
+      border-bottom: none;
+    }
+    .batch-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+    .rank-cell {
+      font-weight: 800;
+      font-size: 1.05rem;
+      white-space: nowrap;
+    }
+    .score-badge {
+      font-weight: 800;
+      font-size: 1rem;
+      padding: 0.3rem 0.65rem;
+      border-radius: 8px;
+      display: inline-block;
+      text-align: center;
+      min-width: 52px;
+    }
+    .score-badge.high { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
+    .score-badge.good { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.4); }
+    .score-badge.mod { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); }
+    .score-badge.low { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); }
+
+    .verdict-tag {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.3rem 0.65rem;
+      border-radius: 9999px;
+      display: inline-block;
+      white-space: nowrap;
+    }
+    .verdict-tag.shortlist { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.35); }
+    .verdict-tag.review { background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.35); }
+    .verdict-tag.moderate { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.35); }
+    .verdict-tag.reject { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.35); }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo-group">
+        <div class="logo-badge">RM</div>
+        <div>
+          <div class="brand-title">ResumeMatch AI</div>
+          <div class="brand-subtitle">Private Talent Intelligence & Job Matching SLM</div>
+        </div>
+      </div>
+      <div class="header-badges">
+        <div class="badge green"><div class="status-dot"></div> Private Local AI Engine</div>
+        <div class="badge blue">Model: ResumeMatch-SLM</div>
+      </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <div class="tabs-nav">
+      <button class="tab-btn active" id="tabAnalyzeBtn" onclick="switchTab('analyze')">📄 Resume Deep Scan</button>
+      <button class="tab-btn" id="tabMatchBtn" onclick="switchTab('match')">🎯 Job Fit Matcher</button>
+      <button class="tab-btn" id="tabBatchBtn" onclick="switchTab('batch')">👥 Recruiter Batch Screener</button>
+    </div>
+
+    <!-- TAB 1: RESUME ANALYZER -->
+    <div id="tabAnalyze">
+      <div class="card">
+        <div class="card-title">
+          <span>Input Candidate Resume Text</span>
+          <span style="font-size:0.8rem; color:var(--text-muted);">Quick Pre-sets:</span>
+        </div>
+        <div class="sample-pills">
+          <button class="pill-btn" onclick="loadSample('devops')">☁️ Senior Cloud/DevOps</button>
+          <button class="pill-btn" onclick="loadSample('ml')">🤖 AI / ML Researcher</button>
+          <button class="pill-btn" onclick="loadSample('nurse')">🏥 ICU Critical Care Nurse</button>
+          <button class="pill-btn" onclick="loadSample('exec')">💼 SaaS Chief Financial Officer</button>
+        </div>
+
+        <!-- Resume File Upload Dropzone -->
+        <div class="dropzone" id="dropzoneResume" onclick="document.getElementById('fileResume').click()">
+          <input type="file" id="fileResume" accept=".pdf,.docx,.doc,.txt,.md" style="display:none;" onchange="handleFileInput(event, 'resumeInput', 'uploadStatusBadge')">
+          <div class="dropzone-icon">📄</div>
+          <div class="dropzone-title">Upload Resume File (PDF, DOCX, TXT)</div>
+          <div class="dropzone-desc">Click to browse or drag & drop file here • Auto-extracts full text into editor</div>
+          <div id="uploadStatusBadge" class="upload-badge" style="display:none;"></div>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 0.8rem; margin: 0.75rem 0;">
+          <div style="flex: 1; height: 1px; background: var(--border-color);"></div>
+          <span style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600; letter-spacing: 0.05em;">or paste resume text</span>
+          <div style="flex: 1; height: 1px; background: var(--border-color);"></div>
+        </div>
+
+        <textarea id="resumeInput" placeholder="Paste full resume text or upload your PDF/Word document above..."></textarea>
+        <div class="action-row">
+          <span id="latencySpan" style="font-size:0.8rem; color:var(--text-muted);"></span>
+          <button class="primary-btn" id="btnAnalyze" onclick="runAnalysis()">
+            <span id="btnAnalyzeText">Run Private AI Extraction</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Analysis Results View -->
+      <div id="analysisResult" class="card hidden">
+        <div class="card-title">
+          <span>Candidate Intelligence Profile</span>
+          <button class="pill-btn" onclick="copyJson()">Copy Raw JSON</button>
+        </div>
+        
+        <div class="results-grid">
+          <div class="stat-box">
+            <div class="stat-label">Experience Seniority</div>
+            <div class="stat-value" id="resSeniority" style="color:#6ee7b7;">-</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">Years of Experience</div>
+            <div class="stat-value" id="resYears">-</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">Primary Domain</div>
+            <div class="stat-value" id="resDomain" style="color:#93c5fd;">-</div>
+          </div>
+        </div>
+
+        <div class="stat-box" style="margin-bottom: 1rem;">
+          <div class="stat-label">Extracted Core Skills</div>
+          <div class="skill-tags" id="resSkills"></div>
+        </div>
+
+        <div class="stat-box" style="margin-bottom: 1rem;">
+          <div class="stat-label">Matching Job Categories / Roles</div>
+          <div class="skill-tags" id="resRoles"></div>
+        </div>
+
+        <div class="stat-box" style="margin-bottom: 1rem;">
+          <div class="stat-label">Executive Summary</div>
+          <p class="summary-text" id="resSummary"></p>
+        </div>
+
+        <details style="margin-top: 1rem;">
+          <summary style="cursor: pointer; font-size: 0.82rem; color: var(--text-muted); font-weight:600;">View Raw Model JSON</summary>
+          <pre id="rawJsonOutput" style="margin-top: 0.5rem;"></pre>
+        </details>
+      </div>
+    </div>
+
+    <!-- TAB 2: JOB FIT MATCHER -->
+    <div id="tabMatch" class="hidden">
+      <div class="card">
+        <div class="card-title">Compare Resume with Job Opening</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.35rem;">
+              <div class="stat-label" style="margin-bottom:0;">Candidate Resume</div>
+              <button class="pill-btn" style="padding:0.2rem 0.65rem; font-size:0.72rem;" onclick="document.getElementById('fileMatchResume').click()">📄 Upload File</button>
+              <input type="file" id="fileMatchResume" accept=".pdf,.docx,.doc,.txt,.md" style="display:none;" onchange="handleFileInput(event, 'matchResumeInput', 'matchUploadBadge')">
+            </div>
+            <div id="matchUploadBadge" class="upload-badge" style="display:none; margin-bottom:0.5rem; width:100%; justify-content:center;"></div>
+            <textarea id="matchResumeInput" style="min-height: 160px;" placeholder="Paste resume here or upload PDF/Word document above..."></textarea>
+          </div>
+          <div>
+            <div class="stat-label">Target Job Description</div>
+            <textarea id="matchJobInput" style="min-height: 160px;" placeholder="Paste target job description and required qualifications here..."></textarea>
+          </div>
+        </div>
+        <div class="action-row">
+          <button class="primary-btn" id="btnMatch" onclick="runMatching()">
+            <span id="btnMatchText">Calculate Match Fit</span>
+          </button>
+        </div>
+      </div>
+
+      <div id="matchResult" class="card hidden">
+        <div class="card-title">Match Analysis & Recommendation</div>
+        <div style="display: flex; gap: 2rem; align-items: center; margin-bottom: 1.5rem;">
+          <div class="score-circle" id="matchScoreDisplay">0%</div>
+          <div>
+            <div style="font-size: 1.25rem; font-weight: 700;" id="matchRecommendation">-</div>
+            <div style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.3rem;">Based on skill alignment, domain relevance, and seniority level.</div>
+          </div>
+        </div>
+
+        <div class="stat-box">
+          <div class="stat-label">Overlapping & Verified Candidate Skills</div>
+          <div class="skill-tags" id="matchSkillsList"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: RECRUITER BATCH SCREENER -->
+    <div id="tabBatch" class="hidden">
+      <div class="card">
+        <div class="card-title">
+          <span>Batch Resume Screening & Leaderboard Ranking</span>
+          <span style="font-size:0.8rem; color:var(--text-muted);">Quick Pre-sets:</span>
+        </div>
+        <div class="sample-pills">
+          <button class="pill-btn" onclick="loadBatchSampleJD('valuelabs')">🌍 ValueLabs Full Stack (Bengaluru)</button>
+          <button class="pill-btn" onclick="loadBatchSampleJD('kyara')">🏢 Kyara Tech Lead (MERN/Python)</button>
+          <button class="pill-btn" onclick="loadBatchSampleJD('frontend_pe')">💻 Frontend Product Engineer</button>
+          <button class="pill-btn" onclick="loadBatchSampleJD('saanvi')">🚀 Saanvi Tech (Full Stack/AI)</button>
+          <button class="pill-btn" onclick="loadBatchSampleJD('fintech')">💳 FinTech Frontend (React / Next.js)</button>
+          <button class="pill-btn" onclick="loadBatchSampleJD('fullstack_cloud')">☁️ Full Stack Cloud Engineer</button>
+          <button class="pill-btn" onclick="loadBatchSampleJD('sr_fullstack')">🚀 Senior Full Stack (Bengaluru)</button>
+          <button class="pill-btn" onclick="loadBatchSampleJD('b2y')">🤖 B2Y MERN Developer</button>
+          <button class="pill-btn" style="border-color:var(--accent); color:#34d399;" onclick="loadSampleCandidatePool()">🎯 Load Sample Candidate Pool (4 Profiles)</button>
+          <button class="pill-btn" style="color:var(--text-muted);" onclick="clearBatchResumes()">🗑️ Clear Resumes</button>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; margin-bottom: 1rem;">
+          <div>
+            <div class="stat-label">Target Job Description (Evaluated Once)</div>
+            <textarea id="batchJobInput" style="min-height: 180px;" placeholder="Paste job opening description with required skills and qualifications..."></textarea>
+          </div>
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.35rem;">
+              <div class="stat-label" style="margin-bottom:0;">Candidate Resumes Pool (<span id="batchCountSpan">0</span> loaded)</div>
+              <button class="pill-btn" style="padding:0.2rem 0.65rem; font-size:0.72rem;" onclick="document.getElementById('batchFileInput').click()">📁 Browse Files</button>
+              <input type="file" id="batchFileInput" multiple accept=".pdf,.docx,.doc,.txt,.md" style="display:none;" onchange="handleBatchFileInput(event)">
+            </div>
+            
+            <div class="dropzone" id="dropzoneBatch" style="min-height: 180px; padding: 1.2rem;" onclick="document.getElementById('batchFileInput').click()">
+              <div class="dropzone-icon" style="font-size: 1.8rem;">📂</div>
+              <div class="dropzone-title" style="font-size: 0.95rem;">Drop Multiple Resumes Here</div>
+              <div class="dropzone-desc" style="font-size: 0.78rem;">Supports multi-select PDF, DOCX, TXT • Evaluates candidate pool locally</div>
+              <div id="batchChipsContainer" class="file-chips-container" onclick="event.stopPropagation();"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Criteria Chips (Editable by Recruiter) -->
+        <div id="criteriaSection" style="margin-top: 1rem; margin-bottom: 1.25rem; background: rgba(15, 23, 42, 0.45); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.85rem 1rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem; flex-wrap:wrap; gap:0.5rem;">
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span style="font-size:0.88rem; font-weight:700; color:var(--text-main);">🎯 Extracted Requirements (<span id="totalCriteriaCount">0</span> detected)</span>
+              <span style="font-size:0.72rem; color:var(--text-muted);">(Click &times; on any chip to remove, or use [+ Add] buttons)</span>
+            </div>
+            <button class="pill-btn" style="padding:0.2rem 0.6rem; font-size:0.72rem;" onclick="triggerCriteriaExtraction()">🔄 Re-detect from JD</button>
+          </div>
+
+          <!-- Core Mandatory Skills -->
+          <div style="margin-bottom:0.6rem;">
+            <div style="font-size:0.73rem; text-transform:uppercase; letter-spacing:0.05em; color:#34d399; font-weight:700; margin-bottom:0.35rem;">
+              📌 Mandatory Core Requirements (100% Core Denominator)
+            </div>
+            <div id="coreChipsContainer" style="display:flex; flex-wrap:wrap; gap:0.4rem; align-items:center;">
+              <span style="font-size:0.75rem; color:var(--text-muted); font-style:italic;">Type or paste a Job Description above to detect criteria...</span>
+            </div>
+          </div>
+
+          <!-- Preferred Bonus Skills -->
+          <div>
+            <div style="font-size:0.73rem; text-transform:uppercase; letter-spacing:0.05em; color:#a78bfa; font-weight:700; margin-bottom:0.35rem;">
+              ⭐ Preferred / Bonus Skills (Up to +10 Bonus Points • Zero Penalty if Missing)
+            </div>
+            <div id="prefChipsContainer" style="display:flex; flex-wrap:wrap; gap:0.4rem; align-items:center;">
+              <span style="font-size:0.75rem; color:var(--text-muted); font-style:italic;">None detected yet.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="action-row">
+          <span id="batchLatencySpan" style="font-size:0.8rem; color:var(--text-muted);"></span>
+          <button class="primary-btn" id="btnBatch" onclick="runBatchMatching()">
+            <span id="btnBatchText">🚀 Screen Candidates & Rank Leaderboard</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Batch Screening Results View -->
+      <div id="batchResult" class="card hidden">
+        <div class="card-title" style="flex-wrap: wrap; gap: 0.75rem;">
+          <div>
+            <span>Candidate Shortlist Leaderboard</span>
+            <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 400; margin-left: 0.5rem;" id="batchSubTitle"></span>
+          </div>
+          <div style="display: flex; gap: 0.5rem; align-items: center;">
+            <input type="text" id="batchSearchInput" placeholder="🔍 Filter candidates or skills..." oninput="filterLeaderboard()" style="background:var(--bg-primary); border:1px solid var(--border-color); color:var(--text-main); padding:0.35rem 0.75rem; border-radius:8px; font-size:0.8rem; width:180px;">
+            <button class="pill-btn" style="background:rgba(16, 185, 129, 0.15); border-color:var(--accent); color:#34d399; font-weight:700;" onclick="exportBatchCSV()">📥 Export CSV</button>
+            <button class="pill-btn" style="background:rgba(99, 102, 241, 0.18); border-color:#6366f1; color:#a5b4fc; font-weight:700;" onclick="openExecutiveReport()">📄 Executive PDF Report</button>
+          </div>
+        </div>
+
+        <div class="summary-metrics-row">
+          <div class="summary-metric-card">
+            <div class="stat-label">Total Screened</div>
+            <div class="val" id="metricTotal">0</div>
+          </div>
+          <div class="summary-metric-card">
+            <div class="stat-label">Top Match Score</div>
+            <div class="val" style="color:#34d399;" id="metricTopScore">0%</div>
+          </div>
+          <div class="summary-metric-card">
+            <div class="stat-label">Shortlisted (&ge;70%)</div>
+            <div class="val" style="color:#60a5fa;" id="metricShortlisted">0</div>
+          </div>
+          <div class="summary-metric-card">
+            <div class="stat-label">JD Required Skills</div>
+            <div class="val" style="color:var(--text-muted); font-size:1.2rem; margin-top:0.5rem;" id="metricJdSkillsCount">0</div>
+          </div>
+        </div>
+
+        <div class="batch-table-wrapper">
+          <table class="batch-table">
+            <thead>
+              <tr>
+                <th style="width: 50px;">Rank</th>
+                <th>Candidate & Experience</th>
+                <th style="width: 90px; text-align: center;">Match</th>
+                <th>Verified Overlapping Skills</th>
+                <th>Missing Gaps</th>
+                <th style="width: 140px; text-align: center;">Hiring Verdict</th>
+              </tr>
+            </thead>
+            <tbody id="batchLeaderboardBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentRawJson = null;
+
+    const SAMPLES = {
+      devops: `Marcus Johnson\nDevOps Engineer | Seattle, WA\nExperience:\nSenior DevOps Engineer, Amazon Web Services (2019-Present)\n- Architected multi-region Kubernetes clusters serving 10K+ pods across 3 AWS regions\n- Built infrastructure-as-code with Terraform managing 500+ cloud resources\n- Implemented GitOps workflows with ArgoCD reducing deployment failures by 75%\n- Designed observability stack with Prometheus, Grafana, and OpenTelemetry\nDevOps Engineer, Nordstrom (2016-2019)\n- Migrated legacy on-prem infrastructure to AWS, cutting hosting costs by 45%\n- Built CI/CD pipelines with GitHub Actions and AWS CodePipeline\nEducation: BS Information Technology, University of Washington 2013\nCertifications: AWS Solutions Architect Professional, CKA, HashiCorp Terraform`,
+      ml: `Wei Zhang\nMachine Learning Engineer | Palo Alto, CA\nExperience:\nStaff ML Engineer, Tesla Autopilot (2021-Present)\n- Train and deploy computer vision models for object detection and lane prediction\n- Optimize neural networks for real-time inference on Tesla FSD chip (<10ms latency)\n- Build distributed training pipelines processing 1M+ video clips daily using PyTorch DDP\nSenior ML Engineer, NVIDIA (2018-2021)\n- Built deep learning models for autonomous driving simulation using TensorRT\nEducation: PhD Computer Science, Stanford University 2016\nSkills: PyTorch, CUDA, C++, Python, Computer Vision, Model Optimization, TensorRT, Distributed Training`,
+      nurse: `Jennifer Park\nRegistered Nurse | Boston, MA\nExperience:\nCharge Nurse, Massachusetts General Hospital ICU (2021-Present)\n- Lead nursing team of 12 in 30-bed medical/surgical ICU\n- Coordinate patient care for critically ill patients on ventilators and ECMO\n- Reduced central line infection rate by 40% through evidence-based bundle implementation\nStaff Nurse, Brigham and Women's Hospital (2017-2021)\n- Provided direct patient care in cardiac step-down unit\nEducation: MSN Nursing Leadership, Boston College 2021; BSN UMass Boston 2015\nCertifications: CCRN, BLS, ACLS, TNCC`,
+      exec: `Morgan Vance\nChief Financial Officer (CFO) | Seattle, WA\nExperience:\nCFO, CloudScale SaaS Solutions ($80M ARR, 450 FTEs) (2019-Present)\n- Steer global finance, accounting, treasury, tax, and investor relations functions\n- Raised $65M Series C funding round and closed $30M credit facility with SVB\n- Prepared company for public market readiness (SOX compliance, ASC 606 revenue recognition)\nVP Finance & Corporate Controller, AppDynamics (2014-2019)\n- Managed 35-person finance org overseeing FP&A and SEC reporting\nEducation: MBA Finance, Wharton School of Business 2008\nCertifications: CPA (Active)`
+    };
+
+    async function uploadResumeFile(file, targetInputId, badgeId) {
+      if (!file) return;
+      const validExtensions = ['.pdf', '.docx', '.doc', '.txt', '.md'];
+      const fileNameLower = file.name.toLowerCase();
+      const isValid = validExtensions.some(ext => fileNameLower.endsWith(ext));
+      
+      if (!isValid) {
+        alert('Unsupported file format. Please upload a PDF (.pdf), Word (.docx), or plain text (.txt) document.');
+        return;
+      }
+
+      const badge = badgeId ? document.getElementById(badgeId) : null;
+      if (badge) {
+        badge.style.display = 'inline-flex';
+        badge.innerHTML = `<span class="spinner" style="width:12px;height:12px;border-width:2px;display:inline-block;margin-right:6px;"></span> Parsing ${file.name}...`;
+        badge.style.background = 'rgba(255, 255, 255, 0.08)';
+        badge.style.borderColor = 'var(--border-color)';
+        badge.style.color = 'var(--text-main)';
+      }
+
+      const reader = new FileReader();
+      reader.onload = async function(e) {
+        try {
+          const base64Data = e.target.result.split(',')[1];
+          const response = await fetch('/api/upload-resume', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              filename: file.name,
+              content_base64: base64Data
+            })
+          });
+
+          const res = await response.json();
+          if (!response.ok || !res.success) {
+            let errorMsg = 'Failed to extract text from document';
+            if (typeof res.detail === 'string') {
+              errorMsg = res.detail;
+            } else if (Array.isArray(res.detail)) {
+              errorMsg = res.detail.map(d => (d.msg || d.type || JSON.stringify(d))).join(', ');
+            } else if (res.detail && typeof res.detail === 'object') {
+              errorMsg = JSON.stringify(res.detail);
+            }
+            throw new Error(errorMsg);
+          }
+
+          const targetInput = document.getElementById(targetInputId);
+          targetInput.value = res.extracted_text;
+
+          if (badge) {
+            badge.innerHTML = `✓ Uploaded & Parsed: <strong>${file.name}</strong> (${res.word_count.toLocaleString()} words)`;
+            badge.style.background = 'rgba(16, 185, 129, 0.2)';
+            badge.style.borderColor = 'var(--accent)';
+            badge.style.color = '#34d399';
+          }
+        } catch (err) {
+          if (badge) {
+            badge.innerHTML = `❌ Error: ${err.message}`;
+            badge.style.background = 'rgba(239, 68, 68, 0.15)';
+            badge.style.borderColor = '#ef4444';
+            badge.style.color = '#f87171';
+          }
+          alert('Upload failed: ' + err.message);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function handleFileInput(event, targetInputId, badgeId) {
+      const file = event.target.files[0];
+      if (file) {
+        uploadResumeFile(file, targetInputId, badgeId);
+      }
+    }
+
+    function setupDropzone(dropzoneId, targetTextareaId, badgeId) {
+      const dropzone = document.getElementById(dropzoneId);
+      if (!dropzone) return;
+
+      ['dragenter', 'dragover'].forEach(eventName => {
+        dropzone.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          dropzone.classList.add('dragover');
+        }, false);
+      });
+
+      ['dragleave', 'drop'].forEach(eventName => {
+        dropzone.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          dropzone.classList.remove('dragover');
+        }, false);
+      });
+
+      dropzone.addEventListener('drop', (e) => {
+        const dt = e.dataTransfer;
+        const file = dt.files[0];
+        if (file) {
+          uploadResumeFile(file, targetTextareaId, badgeId);
+        }
+      }, false);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      setupDropzone('dropzoneResume', 'resumeInput', 'uploadStatusBadge');
+    });
+
+    function loadSample(key) {
+      document.getElementById('resumeInput').value = SAMPLES[key] || '';
+    }
+
+    function switchTab(tab) {
+      document.getElementById('tabAnalyze').classList.toggle('hidden', tab !== 'analyze');
+      document.getElementById('tabMatch').classList.toggle('hidden', tab !== 'match');
+      document.getElementById('tabBatch').classList.toggle('hidden', tab !== 'batch');
+
+      document.getElementById('tabAnalyzeBtn').classList.toggle('active', tab === 'analyze');
+      document.getElementById('tabMatchBtn').classList.toggle('active', tab === 'match');
+      document.getElementById('tabBatchBtn').classList.toggle('active', tab === 'batch');
+
+      if (tab === 'match' && !document.getElementById('matchResumeInput').value) {
+        document.getElementById('matchResumeInput').value = document.getElementById('resumeInput').value;
+      }
+      if (tab === 'batch' && !document.getElementById('batchJobInput').value) {
+        document.getElementById('batchJobInput').value = document.getElementById('matchJobInput').value || document.getElementById('resumeInput').value ? '' : '';
+      }
+    }
+
+    async function runAnalysis() {
+      const resumeText = document.getElementById('resumeInput').value.trim();
+      if (!resumeText) {
+        alert('Please enter resume text or select a preset sample.');
+        return;
+      }
+
+      const btn = document.getElementById('btnAnalyze');
+      const btnText = document.getElementById('btnAnalyzeText');
+      btn.disabled = true;
+      btnText.innerHTML = '<span class="spinner"></span><span>Extracting with Private SLM...</span>';
+      document.getElementById('latencySpan').innerText = 'Processing on local CPU...';
+
+      try {
+        const res = await fetch('/api/analyze', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ resume_text: resumeText })
+        });
+        const data = await res.json();
+        if (!data.success) throw new Error(data.detail || 'Extraction failed');
+
+        currentRawJson = data.data;
+        renderAnalysis(data.data, data.latency_ms);
+      } catch (err) {
+        alert('Analysis Error: ' + err.message);
+      } finally {
+        btn.disabled = false;
+        btnText.innerText = 'Run Private AI Extraction';
+      }
+    }
+
+    function renderAnalysis(d, latency) {
+      document.getElementById('analysisResult').classList.remove('hidden');
+      document.getElementById('latencySpan').innerText = `Completed in ${latency}ms`;
+
+      document.getElementById('resSeniority').innerText = d.experience_level || 'N/A';
+      const y = d.years_of_experience;
+      document.getElementById('resYears').innerText = typeof y === 'string' && y.includes('Year') ? y : `${y || 0}+ Years`;
+      document.getElementById('resDomain').innerText = d.primary_domain || 'N/A';
+      document.getElementById('resSummary').innerText = d.summary || '';
+      document.getElementById('resSummary').style.whiteSpace = 'pre-line';
+
+      const skillsContainer = document.getElementById('resSkills');
+      skillsContainer.innerHTML = '';
+      (d.skills || []).forEach(skill => {
+        const span = document.createElement('span');
+        span.className = 'skill-tag';
+        span.innerText = skill;
+        skillsContainer.appendChild(span);
+      });
+
+      const rolesContainer = document.getElementById('resRoles');
+      rolesContainer.innerHTML = '';
+      (d.matching_job_categories || []).forEach(role => {
+        const span = document.createElement('span');
+        span.className = 'role-tag';
+        span.innerText = role;
+        rolesContainer.appendChild(span);
+      });
+
+      document.getElementById('rawJsonOutput').innerText = JSON.stringify(d, null, 2);
+    }
+
+    async function runMatching() {
+      const resume = document.getElementById('matchResumeInput').value.trim();
+      const job = document.getElementById('matchJobInput').value.trim();
+      if (!resume || !job) {
+        alert('Please fill both the candidate resume and job description.');
+        return;
+      }
+
+      const btn = document.getElementById('btnMatch');
+      const btnText = document.getElementById('btnMatchText');
+      btn.disabled = true;
+      btnText.innerHTML = '<span class="spinner"></span><span>Comparing Profile & Job...</span>';
+
+      try {
+        const res = await fetch('/api/match', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ resume_text: resume, job_description: job })
+        });
+        const result = await res.json();
+        if (!result.success) throw new Error(result.detail || 'Matching failed');
+
+        const d = result.data;
+        const score = d.match_score ?? 0;
+
+        // Derive recommendation label from score
+        let recommendation = 'Strong Match';
+        if (score >= 85) recommendation = '🏆 Excellent Match — Highly Recommended';
+        else if (score >= 70) recommendation = '✅ Strong Match — Good Fit';
+        else if (score >= 55) recommendation = '⚡ Moderate Match — Some Gaps';
+        else if (score >= 40) recommendation = '⚠️ Partial Match — Upskilling Needed';
+        else recommendation = '❌ Low Match — Significant Skill Gaps';
+
+        document.getElementById('matchResult').classList.remove('hidden');
+        document.getElementById('matchScoreDisplay').innerText = score + '%';
+        document.getElementById('matchRecommendation').innerText = recommendation;
+
+        // Matched skills
+        const skillsContainer = document.getElementById('matchSkillsList');
+        skillsContainer.innerHTML = '';
+        if (d.matched_skills && d.matched_skills.length) {
+          d.matched_skills.forEach(s => {
+            const span = document.createElement('span');
+            span.className = 'skill-tag';
+            span.innerText = '✓ ' + s;
+            if (d.evidence_map && d.evidence_map[s]) {
+              span.title = `💡 Resume Evidence:\n${d.evidence_map[s]}`;
+              span.style.cursor = 'help';
+            }
+            skillsContainer.appendChild(span);
+          });
+          if (d.matched_bonus && d.matched_bonus.length) {
+            d.matched_bonus.forEach(s => {
+              const span = document.createElement('span');
+              span.className = 'skill-tag';
+              span.style.background = 'rgba(139,92,246,0.18)';
+              span.style.borderColor = 'rgba(139,92,246,0.4)';
+              span.style.color = '#c084fc';
+              span.innerText = '✦ ' + s;
+              if (d.evidence_map && d.evidence_map[s]) {
+                span.title = `✦ Preferred Bonus Skill (Earned):\n${d.evidence_map[s]}`;
+                span.style.cursor = 'help';
+              }
+              skillsContainer.appendChild(span);
+            });
+          }
+        } else {
+          skillsContainer.innerHTML = '<span style="color:var(--text-muted); font-size:0.85rem;">No exact matching skills found.</span>';
+        }
+
+        // Missing skills section (create if not exists)
+        let missingBox = document.getElementById('matchMissingBox');
+        if (!missingBox) {
+          missingBox = document.createElement('div');
+          missingBox.className = 'stat-box';
+          missingBox.id = 'matchMissingBox';
+          missingBox.style.marginTop = '1rem';
+          document.getElementById('matchResult').appendChild(missingBox);
+        }
+        if (d.missing_skills && d.missing_skills.length) {
+          missingBox.innerHTML = '<div class="stat-label" style="color:var(--text-muted);">Skills to Develop / Gaps</div><div class="skill-tags" id="missingSkillsList"></div>';
+          const missingList = document.getElementById('missingSkillsList');
+          d.missing_skills.forEach(s => {
+            const span = document.createElement('span');
+            span.className = 'skill-tag';
+            span.style.background = 'rgba(255,100,100,0.12)';
+            span.style.borderColor = 'rgba(255,100,100,0.3)';
+            span.innerText = '✗ ' + s;
+            missingList.appendChild(span);
+          });
+          if (d.missing_bonus && d.missing_bonus.length) {
+            d.missing_bonus.forEach(s => {
+              const span = document.createElement('span');
+              span.className = 'skill-tag';
+              span.style.background = 'rgba(255,255,255,0.04)';
+              span.style.borderColor = 'rgba(255,255,255,0.15)';
+              span.style.color = 'var(--text-muted)';
+              span.style.fontSize = '0.75rem';
+              span.title = 'Optional / Preferred: Absence does not penalize score';
+              span.innerText = '○ ' + s + ' (Optional)';
+              missingList.appendChild(span);
+            });
+          }
+          missingBox.style.display = '';
+        } else {
+          missingBox.style.display = 'none';
+        }
+
+        // Candidate profile info
+        let profileBox = document.getElementById('matchProfileBox');
+        if (!profileBox) {
+          profileBox = document.createElement('div');
+          profileBox.className = 'stat-box';
+          profileBox.id = 'matchProfileBox';
+          profileBox.style.marginTop = '1rem';
+          document.getElementById('matchResult').appendChild(profileBox);
+        }
+        profileBox.innerHTML = `<div class="stat-label">Candidate Profile</div>
+          <div style="color:var(--text-muted); font-size:0.88rem; margin-top:0.4rem;">
+            <strong>Domain:</strong> ${d.candidate_domain || '—'} &nbsp;|&nbsp;
+            <strong>Seniority:</strong> ${d.candidate_seniority || '—'} &nbsp;|&nbsp;
+            <strong>Experience:</strong> ${d.candidate_years || '—'}
+          </div>`;
+
+        // Score breakdown
+        let breakdownBox = document.getElementById('matchBreakdownBox');
+        if (!breakdownBox) {
+          breakdownBox = document.createElement('div');
+          breakdownBox.className = 'stat-box';
+          breakdownBox.id = 'matchBreakdownBox';
+          breakdownBox.style.marginTop = '1rem';
+          document.getElementById('matchResult').appendChild(breakdownBox);
+        }
+        const totalSkills = (d.matched_skills?.length || 0) + (d.missing_skills?.length || 0);
+        const matchedCount = d.matched_skills?.length || 0;
+        let verdictText = '', verdictColor = '', verdictIcon = '';
+        if (score >= 85) {
+          verdictText = 'Strong candidate — apply with confidence.';
+          verdictColor = 'var(--accent)'; verdictIcon = '🚀';
+        } else if (score >= 70) {
+          verdictText = 'Good fit — worth applying. Minor gaps can be bridged quickly.';
+          verdictColor = '#4ade80'; verdictIcon = '✅';
+        } else if (score >= 55) {
+          verdictText = 'Decent fit — apply, but highlight transferable skills and willingness to learn missing tools.';
+          verdictColor = '#facc15'; verdictIcon = '⚡';
+        } else if (score >= 40) {
+          verdictText = 'Partial fit — consider upskilling on the gap skills before applying.';
+          verdictColor = '#fb923c'; verdictIcon = '⚠️';
+        } else {
+          verdictText = 'Significant gaps — invest time in learning required skills before applying.';
+          verdictColor = '#f87171'; verdictIcon = '❌';
+        }
+        breakdownBox.innerHTML = `
+          <div class="stat-label">Match Breakdown</div>
+          <div style="margin-top:0.5rem; font-size:0.88rem; color:var(--text-muted);">
+            <strong style="color:var(--text-primary);">${matchedCount} of ${totalSkills}</strong> required technical skills matched
+          </div>
+          <div style="margin-top:0.75rem; padding:0.75rem 1rem; background:rgba(255,255,255,0.04); border-radius:8px; border-left:3px solid ${verdictColor}; font-size:0.88rem;">
+            ${verdictIcon} <strong>Hiring Verdict:</strong> ${verdictText}
+          </div>`;
+
+        // Recommended roles from candidate profile
+        let rolesBox = document.getElementById('matchRolesBox');
+        if (!rolesBox) {
+          rolesBox = document.createElement('div');
+          rolesBox.className = 'stat-box';
+          rolesBox.id = 'matchRolesBox';
+          rolesBox.style.marginTop = '1rem';
+          document.getElementById('matchResult').appendChild(rolesBox);
+        }
+        if (d.recommended_roles && d.recommended_roles.length) {
+          rolesBox.innerHTML = '<div class="stat-label">Best-Fit Job Titles for This Candidate</div><div class="skill-tags" style="margin-top:0.5rem;" id="rolesTagList"></div>';
+          const rolesList = document.getElementById('rolesTagList');
+          d.recommended_roles.forEach(r => {
+            const span = document.createElement('span');
+            span.className = 'skill-tag';
+            span.style.background = 'rgba(99,102,241,0.12)';
+            span.style.borderColor = 'rgba(99,102,241,0.35)';
+            span.innerText = r;
+            rolesList.appendChild(span);
+          });
+          rolesBox.style.display = '';
+        } else {
+          rolesBox.style.display = 'none';
+        }
+      } catch (err) {
+        alert('Matching Error: ' + err.message);
+      } finally {
+        btn.disabled = false;
+        btnText.innerText = 'Calculate Match Fit';
+      }
+    }
+
+    function copyJson() {
+      if (currentRawJson) {
+        navigator.clipboard.writeText(JSON.stringify(currentRawJson, null, 2));
+        alert('JSON copied to clipboard!');
+      }
+    }
+
+    // ==========================================
+    // TAB 3: RECRUITER BATCH SCREENER JAVASCRIPT
+    // ==========================================
+    let batchResumesList = [];
+    let currentBatchData = null;
+
+    const SAMPLE_JDS = {
+      sr_fullstack: `🚀 Hiring | Senior Full Stack Engineer | Bengaluru (WFO)
+
+Looking for a Senior Full Stack Engineer with 7+ years of experience to build and scale innovative products.
+
+📩 Apply Now: https://lnkd.in/gqebt3Eu
+
+Required Skills:
+Backend: Go, Python, Node.js
+Frontend: Flutter, React.js
+System Design, Microservices & CI/CD
+AWS / Cloud & App Store / Play Store deployments
+Team Leadership & Mentoring
+
+Must Have:
+B.Tech from Tier 1 institute (IIT/NIT/BITS or equivalent).
+Strong experience in building and deploying production applications.
+IoT / Connected Devices experience is a plus.`,
+
+      fullstack_cloud: `🚀 We’re Hiring: Full Stack Engineer
+📍 Experience: 5–10 Years
+We are looking for an experienced Full Stack Engineer with strong expertise in frontend, backend, database management, and cloud technologies.
+Must-Have Skills:
+React.js & Node.js
+Strong SQL skills (complex queries)
+MySQL, RDBMS & Data Modelling
+Hands-on experience with public cloud (AWS preferred)
+Ability to configure cloud resources and services
+Understanding of AWS DevOps / CI/CD pipelines
+Interested candidates can share their updated resumes or DM me.`,
+
+      fintech: `📢 WE’RE HIRING: ASSOCIATE FRONTEND ENGINEER (REACT / NEXT.JS) 
+
+A FinTech and Digital Identity Technology Product Company is looking for an Associate Frontend Engineer to join its engineering team.
+
+The company builds technology solutions focused on digital identity verification, fraud detection and secure digital platforms.
+
+📍 Location: Delhi (Work from Office)
+💼 Experience: 1–3 Years
+📅 Working Days: 6 Days (Last Saturday of every month off)
+⏳ Notice Period: Immediate joiners / Maximum 30 days
+🚚 Relocation: Must be willing to relocate to Delhi.
+
+🔑 KEY SKILLS
+
+▪️ React, Next.js & TypeScript
+▪️ Node.js & REST APIs
+▪️ State Management & Data Fetching
+▪️ CSS & Responsive Design
+▪️ Git
+▪️ Cypress / Playwright
+▪️ Data Visualization
+▪️ AI Coding Tools
+
+📌 MANDATORY REQUIREMENTS
+
+▪️ Minimum 1+ years of hands-on experience with React and TypeScript in production applications.
+▪️ Practical experience with Next.js (routing, rendering and API routes).
+▪️ Familiarity with Node.js, Git, REST APIs and state management.
+▪️ Strong knowledge of modern CSS and responsive layouts.
+▪️ Ability to build accessible interfaces and handle loading, empty and error states.
+▪️ Hands-on proficiency with agentic AI coding tools and the ability to review, debug and test AI-generated code.
+▪️ Experience with component and end-to-end testing.
+▪️ Product company experience is mandatory; FinTech experience is a plus.
+
+🎯 ROLE OVERVIEW
+
+Build React/Next.js web applications, dashboards and developer portals for digital identity verification and fraud detection solutions.`,
+
+      kyara: `🚀 Hiring: Development Team Lead / Head of Development\n\n📍 Location: Bodakdev, Ahmedabad\n💼 Experience: 5–7 Years\n💰 CTC: ₹21–25 LPA\n\nMust-Have Skills:\nStrong hands-on experience in Python & MERN Stack\nExpertise in Backend & Frontend Development\nProven experience as a Tech Lead / Team Lead\nStrong People Management & Team Leadership skills\nKnowledge of SDLC, Agile, Code Reviews & Software Delivery\nUnderstanding of Cloud Technologies & Microservices Architecture`,
+      b2y: `🚀 WE’RE HIRING | MERN Stack Developer with AI\n\n💻 What We’re Looking For:\nStrong knowledge of MongoDB, Express.js, React.js, and Node.js\nExperience with AI tools, LLMs, and AI APIs\nUnderstanding of Agentic Development and AI workflows\nKnowledge of Prompt Engineering\nStrong problem-solving and communication skills`,
+      saanvi: `🚀 Hiring: Full Stack Developer\n\n💼 Experience: 5+ Years\n⏰ Timings: 7:30 AM – 4:30 PM\n\n🔑 Must Have Skills:\nJavaScript / TypeScript\nReactJS / Angular / Vue.js\nHTML, CSS & REST APIs\nBackend: Python / Node.js\nThird-party API integration & backend services\nCloud application development\nGCP – Hands-on experience\nLLM API integration & RAG\nAI/LLM application development\n\n⭐ Good to Have:\nGemini Enterprise Agent Platform\nGoogle ADK or similar AI Agent frameworks\nAI chatbots / Conversational AI\nRAG-based solutions\n\n🎯 Primary Focus: Full Stack Development; AI/LLM and chatbot experience is an added advantage.\n\n📩 Interested candidates can reach out to: shrikanth@saanvitechin.com`,
+      valuelabs: `We’re Hiring at ValueLabs | Full Stack Developer – Bengaluru (WFO) 🌍\n\nWe are looking for experienced Full Stack Developers with expertise in Node.js, React.js, TypeScript, GenAI, Automation Testing (Playwright), and Banking Domain experience for an exciting opportunity in Bengaluru.\n\nPosition Details\nRole: Full Stack Developer\nExperience: 5+ and 7+ Years\nLocation: Bengaluru\nDomain: Banking\nNotice Period: Immediate to 30 Days Preferred\n\nRequired Skills\nNode.js\nReact.js\nTypeScript\nGenAI\nAutomation Testing Framework – Playwright\nBanking Domain Experience (Mandatory)\n\nIf you are interested or know someone who would be a great fit, please share your updated resume at: Jobs.bfs2@valuelabs.com`,
+      frontend_pe: `🚀 WE'RE HIRING | PRODUCT ENGINEER - II (FRONTEND)\n\n🔥 Immediate Joiners Only!\n\n📅 Interview Date: 6th November 2026 (Friday)\n📍 Location: Mahadevapura, Bangalore\n🤝 Interview Mode: Face-to-Face\n💼 Employment Type: C2H (Contract to Hire)\n🎯 Interview Level: L2\n👨💻 Experience: 2–4 Years\n\n🔹 Required Skills:\n\nReact.js\n\nJavaScript (ES6+)\n\nHTML5 & CSS3\n\nResponsive UI Development\n\nRedux / Context API\n\nREST API Integration\n\nFrontend Design Patterns & Architecture\n\nPerformance Optimization\n\nDebugging & Troubleshooting\n\nGit (Version Control)\n\nUnit Testing\n\n🔹 Experience Required: 2–4 Years in Frontend Development`
+    };
+
+    const SAMPLE_POOL = [
+      {
+        filename: "Jasmin_Tatariya_FullStack_Lead.pdf",
+        text: `JASMIN TATARIYA\nLead Software Engineer | 12+ Years Experience\nFull-Stack Software Engineer & Tech Lead with 12+ years of experience architecting, developing, and deploying scalable web applications, leading high-performing engineering teams, conducting code reviews, and managing agile delivery.\nSkills: JavaScript, TypeScript, ES6+, Python, PHP, HTML5, CSS3, React.js, Redux, AngularJS, Node.js, Express.js, Flask, MongoDB, PostgreSQL, MySQL, Redis, AWS (EC2, S3, CloudFront), Docker, Microservices Architecture, SDLC, Agile, Code Reviews, Software Delivery, Tech Lead, Team Leadership, Git, RESTful APIs, Third-party API integration, Playwright, Material UI, Performance Optimization, Debugging, Automated Testing.`
+      },
+      {
+        filename: "Vikram_Patel_Senior_DevOps.pdf",
+        text: `Vikram Patel\nSenior DevOps & Cloud Engineer | 6 Years Experience\nSkills: AWS, Azure, Docker, Kubernetes, Terraform, Linux, Bash, Microservices Architecture, Cloud Technologies, CI/CD, GitHub Actions, Prometheus, Grafana.`
+      },
+      {
+        filename: "Aarav_Sharma_Junior_Python.pdf",
+        text: `Aarav Sharma\nJunior Python Developer | 2 Years Experience\nSkills: Python, Django, SQLite, HTML5, CSS3, JavaScript, Git.`
+      },
+      {
+        filename: "Sarah_Jenkins_ICU_Nurse.pdf",
+        text: `Sarah Jenkins\nRegistered Nurse | 6 Years Experience in Healthcare\nSkills: Critical Care, Patient Care, IV Therapy, BLS, ACLS, ICU, Telemetry.`
+      }
+    ];
+
+    let currentCoreCriteria = [];
+    let currentPrefCriteria = [];
+    let isCriteriaManuallyEdited = false;
+    let jdExtractDebounce = null;
+
+    async function triggerCriteriaExtraction() {
+      const jd = document.getElementById('batchJobInput').value.trim();
+      if (!jd) {
+        currentCoreCriteria = [];
+        currentPrefCriteria = [];
+        renderCriteriaChips();
+        return;
+      }
+      try {
+        const res = await fetch('/api/extract-criteria', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ job_description: jd })
+        });
+        const data = await res.json();
+        if (data.success) {
+          currentCoreCriteria = data.core || [];
+          currentPrefCriteria = data.preferred || [];
+          isCriteriaManuallyEdited = false;
+          renderCriteriaChips();
+        }
+      } catch (e) {
+        console.error('Criteria extraction error:', e);
+      }
+    }
+
+    function renderCriteriaChips() {
+      const totalSpan = document.getElementById('totalCriteriaCount');
+      const coreContainer = document.getElementById('coreChipsContainer');
+      const prefContainer = document.getElementById('prefChipsContainer');
+
+      const total = currentCoreCriteria.length + currentPrefCriteria.length;
+      if (totalSpan) totalSpan.innerText = total;
+
+      // Render Core Chips
+      if (!currentCoreCriteria.length) {
+        coreContainer.innerHTML = '<span style="font-size:0.75rem; color:var(--text-muted); font-style:italic;">None detected yet. Click [+ Add Core Skill] below.</span>';
+      } else {
+        coreContainer.innerHTML = currentCoreCriteria.map((c, idx) => `
+          <span class="criteria-chip core">
+            ✓ ${c}
+            <span class="chip-del" title="Remove requirement" onclick="removeCoreChip(${idx})">&times;</span>
+          </span>
+        `).join('');
+      }
+      const addCoreBtn = document.createElement('button');
+      addCoreBtn.className = 'add-chip-btn';
+      addCoreBtn.innerHTML = '＋ Add Core Skill';
+      addCoreBtn.onclick = promptAddCoreChip;
+      coreContainer.appendChild(addCoreBtn);
+
+      // Render Preferred Chips
+      if (!currentPrefCriteria.length) {
+        prefContainer.innerHTML = '<span style="font-size:0.75rem; color:var(--text-muted); font-style:italic;">None detected yet.</span>';
+      } else {
+        prefContainer.innerHTML = currentPrefCriteria.map((p, idx) => `
+          <span class="criteria-chip pref">
+            ✦ ${p}
+            <span class="chip-del" title="Remove bonus skill" onclick="removePrefChip(${idx})">&times;</span>
+          </span>
+        `).join('');
+      }
+      const addPrefBtn = document.createElement('button');
+      addPrefBtn.className = 'add-chip-btn';
+      addPrefBtn.innerHTML = '＋ Add Bonus Skill';
+      addPrefBtn.onclick = promptAddPrefChip;
+      prefContainer.appendChild(addPrefBtn);
+    }
+
+    function removeCoreChip(idx) {
+      currentCoreCriteria.splice(idx, 1);
+      isCriteriaManuallyEdited = true;
+      renderCriteriaChips();
+    }
+
+    function removePrefChip(idx) {
+      currentPrefCriteria.splice(idx, 1);
+      isCriteriaManuallyEdited = true;
+      renderCriteriaChips();
+    }
+
+    function promptAddCoreChip() {
+      const skill = prompt('Enter new Mandatory Core requirement (e.g. "GraphQL", "AWS", "Docker"):');
+      if (skill && skill.trim()) {
+        currentCoreCriteria.push(skill.trim());
+        isCriteriaManuallyEdited = true;
+        renderCriteriaChips();
+      }
+    }
+
+    function promptAddPrefChip() {
+      const skill = prompt('Enter new Preferred / Bonus skill (e.g. "FinTech", "GenAI", "Mobile"):');
+      if (skill && skill.trim()) {
+        currentPrefCriteria.push(skill.trim());
+        isCriteriaManuallyEdited = true;
+        renderCriteriaChips();
+      }
+    }
+
+    function loadBatchSampleJD(type) {
+      document.getElementById('batchJobInput').value = SAMPLE_JDS[type] || '';
+      triggerCriteriaExtraction();
+    }
+
+    function loadSampleCandidatePool() {
+      batchResumesList = [...SAMPLE_POOL];
+      renderBatchChips();
+      if (!document.getElementById('batchJobInput').value) {
+        loadBatchSampleJD('kyara');
+      }
+    }
+
+    function clearBatchResumes() {
+      batchResumesList = [];
+      renderBatchChips();
+      document.getElementById('batchResult').classList.add('hidden');
+    }
+
+    function renderBatchChips() {
+      const container = document.getElementById('batchChipsContainer');
+      const countSpan = document.getElementById('batchCountSpan');
+      countSpan.innerText = batchResumesList.length;
+      container.innerHTML = '';
+
+      batchResumesList.forEach((r, idx) => {
+        const chip = document.createElement('div');
+        chip.className = 'file-chip';
+        chip.innerHTML = `📄 ${r.filename} <span class="remove-chip" onclick="removeBatchResume(${idx})">&times;</span>`;
+        container.appendChild(chip);
+      });
+    }
+
+    function removeBatchResume(idx) {
+      batchResumesList.splice(idx, 1);
+      renderBatchChips();
+    }
+
+    async function handleBatchFileInput(event) {
+      const files = Array.from(event.target.files);
+      if (!files.length) return;
+
+      for (const file of files) {
+        const reader = new FileReader();
+        await new Promise((resolve) => {
+          reader.onload = function(e) {
+            const base64Data = e.target.result.split(',')[1];
+            batchResumesList.push({
+              filename: file.name,
+              content_base64: base64Data
+            });
+            resolve();
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+      renderBatchChips();
+      event.target.value = '';
+    }
+
+    async function runBatchMatching() {
+      const jd = document.getElementById('batchJobInput').value.trim();
+      if (!jd) {
+        alert('Please paste or load a target Job Description first.');
+        return;
+      }
+      if (!batchResumesList.length) {
+        alert('Please upload candidate resumes or click "Load Sample Candidate Pool".');
+        return;
+      }
+
+      const btn = document.getElementById('btnBatch');
+      const btnText = document.getElementById('btnBatchText');
+      btn.disabled = true;
+      btnText.innerHTML = '<span class="spinner"></span><span>Screening Candidate Pool with Local SLM...</span>';
+      document.getElementById('batchLatencySpan').innerText = 'Evaluating candidates locally...';
+
+      try {
+        const res = await fetch('/api/batch-match', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            job_description: jd,
+            resumes: batchResumesList,
+            custom_core_criteria: currentCoreCriteria.length ? currentCoreCriteria : null,
+            custom_preferred_criteria: currentPrefCriteria.length ? currentPrefCriteria : null
+          })
+        });
+
+        const result = await res.json();
+        if (!result.success) throw new Error(result.detail || 'Batch screening failed');
+
+        currentBatchData = result.data;
+        document.getElementById('batchLatencySpan').innerText = `Processed in ${result.latency_ms}ms on local CPU`;
+
+        displayBatchResults(result.data);
+      } catch (err) {
+        alert('Batch Screening Error: ' + err.message);
+      } finally {
+        btn.disabled = false;
+        btnText.innerText = '🚀 Screen Candidates & Rank Leaderboard';
+      }
+    }
+
+    function displayBatchResults(data) {
+      const board = data.leaderboard || [];
+      document.getElementById('batchResult').classList.remove('hidden');
+
+      // Summary Metrics
+      document.getElementById('metricTotal').innerText = board.length;
+      const topScore = board.length ? board[0].match_score : 0;
+      document.getElementById('metricTopScore').innerText = topScore + '%';
+      const shortlisted = board.filter(c => c.match_score >= 70).length;
+      document.getElementById('metricShortlisted').innerText = shortlisted;
+      document.getElementById('metricJdSkillsCount').innerText = `${data.jd_required_skills?.length || 0} skills`;
+
+      document.getElementById('batchSubTitle').innerText = `• Evaluated against ${data.jd_required_skills?.length || 0} JD requirements`;
+
+      renderTableRows(board);
+    }
+
+    function renderTableRows(candidates) {
+      const tbody = document.getElementById('batchLeaderboardBody');
+      tbody.innerHTML = '';
+
+      if (!candidates.length) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--text-muted); padding:2rem;">No candidates match your search filter.</td></tr>';
+        return;
+      }
+
+      candidates.forEach(c => {
+        const tr = document.createElement('tr');
+
+        // Rank styling
+        let rankDisplay = `#${c.rank}`;
+        if (c.rank === 1) rankDisplay = '🥇 1st';
+        else if (c.rank === 2) rankDisplay = '🥈 2nd';
+        else if (c.rank === 3) rankDisplay = '🥉 3rd';
+
+        // Score class
+        let scoreClass = 'high';
+        if (c.match_score < 45) scoreClass = 'low';
+        else if (c.match_score < 65) scoreClass = 'mod';
+        else if (c.match_score < 85) scoreClass = 'good';
+
+        // 1. Matched Core Skills with Evidence Tooltips
+        let matchedHtml = (c.matched_skills || []).map(s => {
+          const ev = (c.evidence_map && c.evidence_map[s]) ? c.evidence_map[s].replace(/"/g, '&quot;') : 'Verified in candidate profile';
+          return `<span class="skill-tag" title="💡 Resume Evidence:\n${ev}" style="cursor:help; font-size:0.75rem; padding:0.18rem 0.5rem; margin:0.12rem;">✓ ${s}</span>`;
+        }).join('');
+
+        // 2. Matched Bonus Skills (if candidate earned bonus!)
+        if (c.matched_bonus && c.matched_bonus.length) {
+          const bonusHtml = c.matched_bonus.map(s => {
+            const ev = (c.evidence_map && c.evidence_map[s]) ? c.evidence_map[s].replace(/"/g, '&quot;') : 'Verified in candidate profile';
+            return `<span class="skill-tag" title="✦ Preferred Bonus Skill (Earned):\n${ev}" style="cursor:help; font-size:0.75rem; padding:0.18rem 0.5rem; margin:0.12rem; background:rgba(139,92,246,0.18); border-color:rgba(139,92,246,0.4); color:#c084fc;">✦ ${s}</span>`;
+          }).join('');
+          matchedHtml += bonusHtml;
+        }
+        if (!matchedHtml) matchedHtml = '<span style="color:var(--text-muted); font-size:0.75rem;">None</span>';
+
+        // 3. Missing Core Skills (Actual must-have gaps!)
+        let missingHtml = (c.missing_skills || []).map(s => `<span class="skill-tag" style="font-size:0.75rem; padding:0.18rem 0.5rem; margin:0.12rem; background:rgba(255,100,100,0.12); border-color:rgba(255,100,100,0.3); color:#f87171;">✗ ${s}</span>`).join('');
+
+        // 4. Missing Bonus Skills (Optional: No penalty, distinct neutral appearance)
+        if (c.missing_bonus && c.missing_bonus.length) {
+          const optHtml = c.missing_bonus.map(s => `<span class="skill-tag" title="Optional / Preferred: Absence does not penalize score" style="font-size:0.72rem; padding:0.15rem 0.45rem; margin:0.12rem; background:rgba(255,255,255,0.04); border-color:rgba(255,255,255,0.15); color:var(--text-muted);">○ ${s}</span>`).join('');
+          missingHtml += optHtml;
+        }
+        if (!missingHtml) missingHtml = '<span style="color:#34d399; font-size:0.75rem;">No Gaps 🎉</span>';
+
+        tr.innerHTML = `
+          <td class="rank-cell">${rankDisplay}</td>
+          <td>
+            <div style="font-weight: 700; color: var(--text-main); font-size: 0.95rem;">${c.candidate_name}</div>
+            <div style="color: var(--text-muted); font-size: 0.78rem; margin-top: 0.2rem;">
+              <span>💼 ${c.seniority}</span> • <span>⏱️ ${c.years_experience}</span>
+            </div>
+            <div style="color: var(--accent-cyan); font-size: 0.72rem; margin-top: 0.15rem;">📄 ${c.filename}</div>
+            <button onclick="copyPitch(${c.rank - 1})" style="margin-top:0.3rem; background:rgba(6,182,212,0.1); border:1px solid rgba(6,182,212,0.3); color:var(--accent-cyan); font-size:0.72rem; padding:0.15rem 0.55rem; border-radius:4px; cursor:pointer;" title="Copy executive summary pitch to clipboard">📋 Copy Pitch</button>
+          </td>
+          <td style="text-align: center;">
+            <div class="score-badge ${scoreClass}">${c.match_score}%</div>
+            <div style="font-size:0.72rem; color:var(--text-muted); margin-top:0.25rem; white-space:nowrap;">
+              <span>Core: ${c.core_score !== undefined ? c.core_score : c.match_score}%</span>
+              ${c.bonus_score && c.bonus_score > 0 ? ` • <span style="color:#c084fc; font-weight:600;">+${c.bonus_score} bonus</span>` : ''}
+            </div>
+          </td>
+          <td><div style="display:flex; flex-wrap:wrap; gap:0.25rem; align-items:center; max-width:320px; max-height:165px; overflow-y:auto; padding-right:2px;">${matchedHtml}</div></td>
+          <td><div style="display:flex; flex-wrap:wrap; gap:0.25rem; align-items:center; max-width:280px; max-height:165px; overflow-y:auto; padding-right:2px;">${missingHtml}</div></td>
+          <td style="text-align: center;">
+            <div class="verdict-tag ${c.badge_class}">${c.verdict}</div>
+          </td>
+        `;
+
+        tbody.appendChild(tr);
+      });
+    }
+
+    function copyPitch(idx) {
+      if (!currentBatchData || !currentBatchData.leaderboard) return;
+      const c = currentBatchData.leaderboard[idx];
+      if (c && c.candidate_pitch) {
+        navigator.clipboard.writeText(c.candidate_pitch).then(() => {
+          alert('📋 Candidate Summary Pitch Copied to Clipboard!\n\n' + c.candidate_pitch);
+        });
+      }
+    }
+
+    function filterLeaderboard() {
+      if (!currentBatchData || !currentBatchData.leaderboard) return;
+      const q = document.getElementById('batchSearchInput').value.toLowerCase().trim();
+      if (!q) {
+        renderTableRows(currentBatchData.leaderboard);
+        return;
+      }
+
+      const filtered = currentBatchData.leaderboard.filter(c => {
+        return c.candidate_name.toLowerCase().includes(q) ||
+               c.filename.toLowerCase().includes(q) ||
+               c.seniority.toLowerCase().includes(q) ||
+               c.matched_skills.some(s => s.toLowerCase().includes(q)) ||
+               c.missing_skills.some(s => s.toLowerCase().includes(q)) ||
+               c.verdict.toLowerCase().includes(q);
+      });
+
+      renderTableRows(filtered);
+    }
+
+    function exportBatchCSV() {
+      if (!currentBatchData || !currentBatchData.leaderboard || !currentBatchData.leaderboard.length) {
+        alert('No batch screening results available to export.');
+        return;
+      }
+
+      const headers = [
+        'Rank', 'Candidate Name', 'Filename', 'Match Score (%)', 'Core Score (%)', 'Bonus Score (pts)',
+        'Seniority', 'Experience', 'Verdict', 'Matched Core Skills', 'Missing Core Gaps',
+        'Matched Bonus Skills', 'Missing Optional Skills', 'Executive Pitch'
+      ];
+      const rows = currentBatchData.leaderboard.map(c => {
+        const cleanVerdict = (c.verdict || '').replace(/[^\w\s\-\–\—]/g, '').replace(/[\–\—]/g, '-').trim();
+        return [
+          c.rank,
+          `"${(c.candidate_name || '').replace(/"/g, '""')}"`,
+          `"${(c.filename || '').replace(/"/g, '""')}"`,
+          c.match_score,
+          c.core_score !== undefined ? c.core_score : c.match_score,
+          c.bonus_score !== undefined ? c.bonus_score : 0,
+          `"${(c.seniority || '').replace(/"/g, '""')}"`,
+          `"${(c.years_experience || '').replace(/"/g, '""')}"`,
+          `"${cleanVerdict.replace(/"/g, '""')}"`,
+          `"${(c.matched_skills || []).join(', ').replace(/"/g, '""')}"`,
+          `"${(c.missing_skills || []).join(', ').replace(/"/g, '""')}"`,
+          `"${(c.matched_bonus || []).join(', ').replace(/"/g, '""')}"`,
+          `"${(c.missing_bonus || []).join(', ').replace(/"/g, '""')}"`,
+          `"${(c.candidate_pitch || '').replace(/\n/g, ' ').replace(/"/g, '""')}"`
+        ];
+      });
+
+      const csvRows = [headers.join(','), ...rows.map(e => e.join(','))].join('\r\n');
+      const blob = new Blob(['\uFEFF' + csvRows], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.setAttribute('href', url);
+      link.setAttribute('download', `Candidate_Leaderboard_${new Date().toISOString().slice(0,10)}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+
+    function openExecutiveReport() {
+      if (!currentBatchData || !currentBatchData.leaderboard || !currentBatchData.leaderboard.length) {
+        alert('No screening results available. Please run batch screening first.');
+        return;
+      }
+      const printArea = document.getElementById('executivePrintArea');
+      const jdText = document.getElementById('batchJobInput').value.trim();
+      const firstLine = jdText ? jdText.split('\n')[0].replace(/[^\w\s|–—\-\/]/g, '').trim() : 'Software Engineering Opening';
+      
+      const topCand = currentBatchData.leaderboard[0];
+      const shortlisted = currentBatchData.leaderboard.filter(c => c.match_score >= 70);
+
+      printArea.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; border-bottom:2px solid #334155; padding-bottom:1rem; margin-bottom:1.25rem;">
+          <div>
+            <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.1em; color:#64748b; font-weight:700;">ResumeMatch AI • Executive Screening Briefing</div>
+            <h2 style="margin:0.25rem 0; font-size:1.35rem; color:#0f172a;">${firstLine}</h2>
+            <div style="font-size:0.78rem; color:#475569;">Screened on ${new Date().toLocaleDateString(undefined, { year:'numeric', month:'short', day:'numeric' })} • Evaluated Locally on Private SLM</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:1.8rem; font-weight:800; color:#10b981;">${topCand.match_score}%</div>
+            <div style="font-size:0.72rem; color:#64748b; font-weight:600;">TOP CANDIDATE MATCH</div>
+          </div>
+        </div>
+
+        <!-- Summary Statistics -->
+        <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:0.75rem; margin-bottom:1.25rem;">
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:0.6rem 0.8rem; border-radius:8px; text-align:center;">
+            <div style="font-size:0.68rem; color:#64748b; text-transform:uppercase; font-weight:700;">Total Screened</div>
+            <div style="font-size:1.25rem; font-weight:800; color:#0f172a;">${currentBatchData.leaderboard.length} Candidates</div>
+          </div>
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:0.6rem 0.8rem; border-radius:8px; text-align:center;">
+            <div style="font-size:0.68rem; color:#64748b; text-transform:uppercase; font-weight:700;">Shortlisted (&ge;70%)</div>
+            <div style="font-size:1.25rem; font-weight:800; color:#2563eb;">${shortlisted.length} Candidates</div>
+          </div>
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:0.6rem 0.8rem; border-radius:8px; text-align:center;">
+            <div style="font-size:0.68rem; color:#64748b; text-transform:uppercase; font-weight:700;">Core Requirements</div>
+            <div style="font-size:1.25rem; font-weight:800; color:#10b981;">${currentCoreCriteria.length || (topCand.matched_skills.length + topCand.missing_skills.length)} Skills</div>
+          </div>
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:0.6rem 0.8rem; border-radius:8px; text-align:center;">
+            <div style="font-size:0.68rem; color:#64748b; text-transform:uppercase; font-weight:700;">Bonus Criteria</div>
+            <div style="font-size:1.25rem; font-weight:800; color:#8b5cf6;">${currentPrefCriteria.length || ((topCand.matched_bonus || []).length + (topCand.missing_bonus || []).length)} Skills</div>
+          </div>
+        </div>
+
+        <!-- Leaderboard Table -->
+        <h3 style="font-size:0.9rem; color:#0f172a; margin-bottom:0.5rem; text-transform:uppercase; letter-spacing:0.04em;">Ranked Candidate Leaderboard</h3>
+        <table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem; font-size:0.78rem;">
+          <thead>
+            <tr style="background:#f1f5f9; text-align:left; border-bottom:2px solid #cbd5e1;">
+              <th style="padding:6px 8px; color:#475569;">Rank</th>
+              <th style="padding:6px 8px; color:#475569;">Candidate Name</th>
+              <th style="padding:6px 8px; color:#475569;">Seniority / Experience</th>
+              <th style="padding:6px 8px; text-align:center; color:#475569;">Score Breakdown</th>
+              <th style="padding:6px 8px; text-align:center; color:#475569;">Overall</th>
+              <th style="padding:6px 8px; color:#475569;">Hiring Recommendation</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${currentBatchData.leaderboard.map((c, i) => `
+              <tr style="border-bottom:1px solid #e2e8f0; background:${i===0 ? '#f0fdf4' : 'transparent'};">
+                <td style="padding:6px 8px; font-weight:700;">#${c.rank}</td>
+                <td style="padding:6px 8px; font-weight:600; color:#0f172a;">${c.candidate_name}</td>
+                <td style="padding:6px 8px; color:#64748b;">${c.seniority} • ${c.years_experience}</td>
+                <td style="padding:6px 8px; text-align:center; color:#475569; font-size:0.72rem;">Core: ${c.core_score}% • +${c.bonus_score} bonus</td>
+                <td style="padding:6px 8px; text-align:center; font-weight:800; color:${c.match_score>=70?'#10b981':(c.match_score>=60?'#3b82f6':'#ef4444')}; font-size:0.9rem;">${c.match_score}%</td>
+                <td style="padding:6px 8px; font-weight:600; color:#334155;">${c.verdict.replace(/[^\w\s\-\–]/g, '').trim()}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+
+        <!-- Candidate Detailed Scorecards -->
+        <h3 style="font-size:0.9rem; color:#0f172a; margin-bottom:0.6rem; text-transform:uppercase; letter-spacing:0.04em;">Top Candidate Breakdown & Recruiter Pitches</h3>
+        ${currentBatchData.leaderboard.slice(0, 3).map(c => `
+          <div style="border:1px solid #cbd5e1; border-radius:8px; padding:0.8rem; margin-bottom:0.85rem; background:#ffffff;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.35rem;">
+              <div>
+                <strong style="font-size:0.9rem; color:#0f172a;">${c.candidate_name}</strong>
+                <span style="font-size:0.75rem; color:#64748b; margin-left:0.4rem;">(${c.seniority} • ${c.years_experience})</span>
+              </div>
+              <span style="font-weight:800; font-size:0.9rem; color:${c.match_score>=70?'#10b981':(c.match_score>=60?'#2563eb':'#ef4444')};">${c.match_score}% Match (Core: ${c.core_score}% • +${c.bonus_score} bonus)</span>
+            </div>
+            <div style="font-size:0.75rem; color:#334155; line-height:1.4; background:#f8fafc; padding:0.5rem 0.7rem; border-radius:6px; border-left:3px solid #3b82f6; margin-bottom:0.4rem;">
+              <strong>Executive Recruiter Pitch:</strong><br>${c.candidate_pitch.replace(/\n/g, '<br>')}
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem; font-size:0.72rem;">
+              <div>
+                <span style="color:#059669; font-weight:700;">✓ Verified Core Strengths (${c.matched_skills.length}):</span>
+                <div style="color:#334155; margin-top:2px;">${c.matched_skills.join(', ') || 'None verified'}</div>
+              </div>
+              <div>
+                <span style="color:#dc2626; font-weight:700;">✗ Identified Core Gaps (${c.missing_skills.length}):</span>
+                <div style="color:#334155; margin-top:2px;">${c.missing_skills.join(', ') || 'None'}</div>
+              </div>
+            </div>
+          </div>
+        `).join('')}
+      `;
+
+      document.getElementById('executiveModal').classList.remove('hidden');
+    }
+
+    function closeExecutiveReport() {
+      document.getElementById('executiveModal').classList.add('hidden');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const jobInput = document.getElementById('batchJobInput');
+      if (jobInput) {
+        jobInput.addEventListener('input', () => {
+          clearTimeout(jdExtractDebounce);
+          jdExtractDebounce = setTimeout(triggerCriteriaExtraction, 450);
+        });
+      }
+    });
+
+  </script>
+
+  <!-- Executive Report Modal -->
+  <div id="executiveModal" class="modal-overlay hidden" onclick="if(event.target===this) closeExecutiveReport()">
+    <div class="modal-card">
+      <div class="modal-header no-print">
+        <div style="font-weight:700; font-size:1.05rem; display:flex; align-items:center; gap:0.5rem;">
+          <span>📄 Executive Talent Briefing</span>
+          <span style="font-size:0.75rem; color:var(--text-muted); font-weight:400;">(Ready to print or save as PDF)</span>
+        </div>
+        <div style="display:flex; gap:0.5rem; align-items:center;">
+          <button class="pill-btn" style="background:#10b981; color:#ffffff; font-weight:700; border:none; padding:0.4rem 0.9rem;" onclick="window.print()">🖨️ Print / Save as PDF</button>
+          <button class="pill-btn" onclick="closeExecutiveReport()">✕ Close</button>
+        </div>
+      </div>
+      <div class="modal-body" id="executivePrintArea">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
+

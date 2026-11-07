@@ -2,6 +2,16 @@
 
 A privacy-first, 100% local Small Language Model (SLM) web application running on local CPU (fine-tuned from `Qwen/Qwen2.5-0.5B-Instruct`) to screen candidate resumes at scale against job descriptions with decoupled two-tier scoring and deep tech-stack verification.
 
+<p align="center">
+  <img src="assets/hero_banner.jpg" alt="ResumeMatch AI Announcement" width="900"/>
+</p>
+
+## Application UI Previews
+
+| Tab 1: Resume Deep Scan | Tab 2: Job Fit Matcher | Tab 3: Recruiter Batch Screener |
+| :---: | :---: | :---: |
+| <img src="assets/resume_deep_scan_demo.jpg" width="280" alt="Resume Deep Scan"/> | <img src="assets/job_fit_matcher_demo.jpg" width="280" alt="Job Fit Matcher"/> | <img src="assets/batch_screener_demo.jpg" width="280" alt="Recruiter Batch Screener"/> |
+
 ## Core Capabilities
 
 - **Recruiter Batch Screener:** Screen candidate pools (PDF, DOCX, TXT) against target job descriptions in a single pass with sub-250ms latency on local CPU.

@@ -8,21 +8,15 @@ A privacy-first, 100% local Small Language Model (SLM) web application running o
 
 ---
 
-## 📸 Application Views
+## 📸 Additional Views
 
-### 1. Recruiter Batch Screener & Shortlist Leaderboard
-Screen candidate pools (PDF, Word, Text) against target job descriptions in a single pass with sub-250ms latency on local CPU.
-<p align="center">
-  <img src="assets/resumematch_demo.png" alt="Recruiter Batch Screener" width="850"/>
-</p>
-
-### 2. Job Fit Matcher
+### 1. Job Fit Matcher
 Decoupled scoring comparing individual candidate profiles against job requirements with verified evidence and gap identification.
 <p align="center">
   <img src="assets/tab2_job_fit_matcher.png" alt="Job Fit Matcher" width="850"/>
 </p>
 
-### 3. Resume Deep Scan
+### 2. Resume Deep Scan
 Instant privacy-first extraction of candidate seniority, years of experience, core skills, matching roles, and executive summary.
 <p align="center">
   <img src="assets/tab1_resume_deep_scan.png" alt="Resume Deep Scan" width="850"/>
